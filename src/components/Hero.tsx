@@ -63,7 +63,7 @@ export function Hero({ forecast, sel, onSelectChip, current }: HeroProps) {
       </div>
       <div className="wrap">
         <div>
-          <div className="brand">Strandvind · Mandal</div>
+          <div className="brand">Hvilken strand i Mandal?</div>
           <div className="now-temp">{Math.round(current.temp)}°</div>
           <div className="now-wind">
             <b>{current.speed.toFixed(0)} m/s</b> fra {dirName(current.from)} (

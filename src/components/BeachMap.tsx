@@ -1,5 +1,6 @@
+import { useEffect } from 'react';
 import L from 'leaflet';
-import { MapContainer, Marker, TileLayer } from 'react-leaflet';
+import { MapContainer, Marker, TileLayer, useMap } from 'react-leaflet';
 import type { Kategori } from '../lib/score';
 import type { ScoredBeach } from './BeachList';
 
@@ -25,6 +26,20 @@ function pinIcon(navn: string, category: Kategori, windFrom: number) {
   });
 }
 
+// react-leaflet mounts the map before layout (web fonts, flex reflow) settles,
+// so tiles/markers get positioned against a stale container size — watch the
+// container and re-sync whenever its actual size changes.
+function InvalidateSizeOnResize() {
+  const map = useMap();
+  useEffect(() => {
+    const container = map.getContainer();
+    const observer = new ResizeObserver(() => map.invalidateSize());
+    observer.observe(container);
+    return () => observer.disconnect();
+  }, [map]);
+  return null;
+}
+
 interface BeachMapProps {
   scored: ScoredBeach[];
   windFrom: number;
@@ -44,6 +59,7 @@ export function BeachMap({ scored, windFrom }: BeachMapProps) {
         maxZoom={18}
         attribution="Esri World Imagery"
       />
+      <InvalidateSizeOnResize />
       {scored.map(({ beach, category }) => (
         <Marker
           key={beach.id}

@@ -64,10 +64,10 @@ fullføres eller når noe avviker fra planen, slik at arbeidet kan fortsette i e
   standard). Brukt react-leaflet v5 i stedet — API-kompatibelt for
   MapContainer/TileLayer/Marker-bruken her.
 - **Stranddata (lat/lon) var systematisk feil**: Bruker rapporterte at kart-POI-ene
-  var «way off». Kryssjekket alle strender mot ekte Google Maps-plassdata: hver
+  var «way off». Kryssjekket alle 9 strender mot ekte Google Maps-plassdata: hver
   strands lengdegrad i prototypen var ~350–590m for langt vest (breddegrad var
-  stort sett riktig). Rettet 8 av 9 strender (alle unntatt `stumpestrendene`, som
-  det ikke ble oppgitt bekreftede koordinater for – se «Gjenstår» under).
+  stort sett riktig). Alle 9 strender er nå rettet, inkludert `stumpestrendene`
+  (siste, rettet med bruker-oppgitt Google Maps-lenke).
   `venderMot`-verdiene er IKKE endret ennå (jf. PLAN.md §10-forbudet), men bør
   vurderes på nytt siden posisjonene nå er justert.
 
@@ -86,11 +86,9 @@ Statisk CSS-gjennomgang tyder på at layouten tåler 320px (flex-wrap på chips,
 ingen fikserte bredder som ville forårsake horisontal scroll), men dette er ikke
 bekreftet i en ekte nettleser.
 
-**`stumpestrendene` trenger bekreftede koordinater** — ligger fortsatt på
-prototypens opprinnelige (mistenkt unøyaktige) verdier: `lat: 58.0138, lon: 7.4335`.
-Finn riktig posisjon (f.eks. via Google Maps-lenke slik de andre 8 ble rettet) og
-oppdater `src/data/beaches.ts`. Vurder samtidig om `venderMot` for noen av de 8
-rettede strendene bør justeres nå som posisjonene er mer presise.
+Alle 9 strenders koordinater er nå verifisert mot Google Maps. Gjenstående:
+vurder om `venderMot` for noen strender bør justeres nå som posisjonene er
+mer presise (ikke gjort ennå — jf. PLAN.md §10).
 
 ## Praktisk for å fortsette
 

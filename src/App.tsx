@@ -4,6 +4,7 @@ import { useForecast } from './hooks/useForecast';
 import { cat, explain, scoreBeach } from './lib/score';
 import { Hero } from './components/Hero';
 import { BestBeach } from './components/BestBeach';
+import { BeachMap } from './components/BeachMap';
 import { BeachList, type ScoredBeach } from './components/BeachList';
 
 function App() {
@@ -35,6 +36,8 @@ function App() {
           category={top.category}
           why={top.why}
         />
+
+        <BeachMap scored={scored} windFrom={w.from} />
 
         <BeachList scored={scored} />
 

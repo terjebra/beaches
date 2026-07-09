@@ -158,6 +158,43 @@ header.hero {
   margin-left: 10px;
 }
 
+/* ---------- KART ---------- */
+#map {
+  height: 400px;
+  border-radius: 18px;
+  margin-top: 16px;
+  box-shadow: 0 4px 18px rgba(8, 52, 76, 0.12);
+}
+.leaflet-container {
+  font-family: 'Inter';
+}
+.beach-pin {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  filter: drop-shadow(0 2px 3px rgba(0, 0, 0, 0.45));
+}
+.beach-pin .dot {
+  width: 16px;
+  height: 16px;
+  border-radius: 50%;
+  border: 2.5px solid #fff;
+}
+.beach-pin .lbl {
+  font: 600 10.5px 'Inter';
+  color: #fff;
+  text-shadow: 0 1px 3px rgba(0, 0, 0, 0.9);
+  white-space: nowrap;
+  margin-top: 2px;
+}
+.wind-glyph {
+  transform-origin: center;
+  font-size: 15px;
+  line-height: 1;
+  color: #fff;
+  text-shadow: 0 1px 2px rgba(0, 0, 0, 0.8);
+}
+
 /* ---------- LISTE ---------- */
 section.list {
   margin-top: 22px;
@@ -259,5 +296,8 @@ footer a {
   .compass {
     width: 100px;
     height: 100px;
+  }
+  #map {
+    height: 340px;
   }
 }

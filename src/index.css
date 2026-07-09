@@ -1,0 +1,40 @@
+:root {
+  --hav: #0e4a6b; /* Skagerrak */
+  --dyp: #08344c;
+  --grunne: #5fb8bf; /* grunt badevann */
+  --sand: #f4e7c5;
+  --bakgrunn: #f7f3e8;
+  --furu: #2f5d50;
+  --sol: #ffc94d;
+  --roed: #db5461;
+  --gul: #e8a93c;
+  --groenn: #3b9b6f;
+  --tekst: #12303f;
+  --dus: #5c7482;
+}
+
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+body {
+  font-family: 'Inter', system-ui, sans-serif;
+  background: var(--bakgrunn);
+  color: var(--tekst);
+  -webkit-font-smoothing: antialiased;
+}
+
+h1,
+h2,
+h3,
+.display {
+  font-family: 'Familjen Grotesk', sans-serif;
+}
+
+.wrap {
+  max-width: 720px;
+  margin: 0 auto;
+  padding: 0 16px;
+}

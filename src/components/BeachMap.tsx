@@ -1,10 +1,12 @@
 import { useEffect } from 'react';
 import L from 'leaflet';
 import { MapContainer, Marker, TileLayer, useMap } from 'react-leaflet';
+import { BEACHES } from '../data/beaches';
 import type { Kategori } from '../lib/score';
 import type { ScoredBeach } from './BeachList';
 
-const CENTER: [number, number] = [58.018, 7.431];
+const BOUNDS = L.latLngBounds(BEACHES.map((b): [number, number] => [b.lat, b.lon]));
+const BOUNDS_PADDING: L.PointExpression = [24, 24];
 
 const CATEGORY_COLOR: Record<Kategori, string> = {
   g: '#3B9B6F',
@@ -27,13 +29,18 @@ function pinIcon(navn: string, category: Kategori, windFrom: number) {
 }
 
 // react-leaflet mounts the map before layout (web fonts, flex reflow) settles,
-// so tiles/markers get positioned against a stale container size — watch the
-// container and re-sync whenever its actual size changes.
-function InvalidateSizeOnResize() {
+// so the initial fit can be computed against a stale container size — watch
+// the container and re-fit to the beaches whenever its actual size changes.
+function FitToBeaches() {
   const map = useMap();
   useEffect(() => {
     const container = map.getContainer();
-    const observer = new ResizeObserver(() => map.invalidateSize());
+    const fit = () => {
+      map.invalidateSize();
+      map.fitBounds(BOUNDS, { padding: BOUNDS_PADDING });
+    };
+    fit();
+    const observer = new ResizeObserver(fit);
     observer.observe(container);
     return () => observer.disconnect();
   }, [map]);
@@ -48,8 +55,8 @@ interface BeachMapProps {
 export function BeachMap({ scored, windFrom }: BeachMapProps) {
   return (
     <MapContainer
-      center={CENTER}
-      zoom={14}
+      bounds={BOUNDS}
+      boundsOptions={{ padding: BOUNDS_PADDING }}
       scrollWheelZoom={false}
       id="map"
       attributionControl={false}
@@ -59,7 +66,7 @@ export function BeachMap({ scored, windFrom }: BeachMapProps) {
         maxZoom={18}
         attribution="Esri World Imagery"
       />
-      <InvalidateSizeOnResize />
+      <FitToBeaches />
       {scored.map(({ beach, category }) => (
         <Marker
           key={beach.id}

@@ -6,22 +6,36 @@ import { Hero } from './components/Hero';
 import { BestBeach } from './components/BestBeach';
 import { BeachMap } from './components/BeachMap';
 import { BeachList, type ScoredBeach } from './components/BeachList';
+import { WindOverride } from './components/WindOverride';
+
+interface Override {
+  from: number;
+  speed: number;
+}
 
 function App() {
   const { forecast, isError } = useForecast();
   const [sel, setSel] = useState(0);
-  const w = forecast[Math.min(sel, forecast.length - 1)];
+  const [override, setOverride] = useState<Override | null>(null);
+
+  const base = forecast[Math.min(sel, forecast.length - 1)];
+  const current = override ? { ...base, from: override.from, speed: override.speed } : base;
 
   const scored: ScoredBeach[] = BEACHES.map((beach) => {
-    const score = scoreBeach(beach, w.from, w.speed);
-    return { beach, score, category: cat(score), why: explain(beach, w.from, w.speed) };
+    const score = scoreBeach(beach, current.from, current.speed);
+    return {
+      beach,
+      score,
+      category: cat(score),
+      why: explain(beach, current.from, current.speed),
+    };
   }).sort((a, b) => b.score - a.score);
 
   const top = scored[0];
 
   return (
     <>
-      <Hero forecast={forecast} sel={sel} onSelectChip={setSel} />
+      <Hero forecast={forecast} sel={sel} onSelectChip={setSel} current={current} />
       <div className="wrap">
         {isError && (
           <div className="notice">
@@ -37,7 +51,12 @@ function App() {
           why={top.why}
         />
 
-        <BeachMap scored={scored} windFrom={w.from} />
+        <BeachMap scored={scored} windFrom={current.from} />
+
+        <WindOverride
+          onOverride={(from, speed) => setOverride({ from, speed })}
+          onReset={() => setOverride(null)}
+        />
 
         <BeachList scored={scored} />
 

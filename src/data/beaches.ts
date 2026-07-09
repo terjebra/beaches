@@ -27,8 +27,8 @@ export const BEACHES: Beach[] = [
   {
     id: 'stumpestrendene',
     navn: 'Stumpestrendene',
-    lat: 58.0138,
-    lon: 7.4335,
+    lat: 58.0147863,
+    lon: 7.4406436,
     venderMot: 175,
     yr: 'https://www.yr.no/nb/v%C3%A6rvarsel/daglig-tabell/1-2316231/Norge/Agder/Lindesnes/Stumpestrendene',
   },

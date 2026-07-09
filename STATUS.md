@@ -27,7 +27,25 @@ fullføres eller når noe avviker fra planen, slik at arbeidet kan fortsette i e
   returnerer alltid data (faller tilbake til eksempelvind ved feil)
 - `QueryClientProvider` koblet inn i `src/main.tsx`
 
-## Avvik fra planen (bevisste, avklart med bruker)
+**Milepæl 4 – UI** ✅
+- `src/components/Hero.tsx`, `Compass.tsx` — temp, vind, kompass, tidschips
+- `src/components/BestBeach.tsx` — anbefalingskortet
+- `src/components/BeachList.tsx` / `BeachCard.tsx` — sortert liste, score-pills, Yr-lenker
+- `App.tsx` koblet opp mot `useForecast()` + `score.ts`. Appen fungerer uten kart.
+
+**Milepæl 5 – Kart** ✅
+- `src/components/BeachMap.tsx`: react-leaflet + Esri World Imagery-fliser
+- `L.divIcon`-markører (fargeprikk per kategori, vindpil, navn), markup/CSS 1:1
+  fra prototypen
+
+**Milepæl 6 – Finpuss** ✅ (funksjonelt) / ⚠️ (verifisering utestår, se under)
+- `src/components/WindOverride.tsx` — retning/styrke-slidere, overstyrer scoring +
+  visning (temp forblir fra varselet, kun from/speed overstyres, som i prototypen)
+- Animerte vindstriper i `Hero.tsx`, memoisert på `[current.from, current.speed]`
+  så de ikke regenereres ved urelaterte re-renders
+- `prefers-reduced-motion` slår av vindstriper og kompassnål-transition
+
+## Avvik fra planen (bevisste, avklart med bruker eller nødvendige pga. faktisk API/versjon)
 
 - **Gust-data**: MET sitt `compact`-endepunkt inkluderer *ikke* `wind_speed_of_gust`
   (kun `complete`-endepunktet har det – verifisert live mot API 2026-07-09).
@@ -41,21 +59,25 @@ fullføres eller når noe avviker fra planen, slik at arbeidet kan fortsette i e
   ingen endring nødvendig.
 - **Deploy-base-path**: Avklart med bruker at `base` skal være `/beaches/`
   (matcher repo-navnet), ikke en egen `/strender/`-subpath.
+- **react-leaflet-versjon**: Planen (§2) spesifiserer v4, men v4s peer-deps krever
+  React 18. Dette prosjektet ble scaffoldet med React 19 (create-vite sin
+  standard). Brukt react-leaflet v5 i stedet — API-kompatibelt for
+  MapContainer/TileLayer/Marker-bruken her.
 
-## Neste: Milepæl 4 – UI
+## Gjenstår / ikke verifisert
 
-Fra PLAN.md §9: Hero, BestBeach, liste. Appen skal fungere uten kart.
+Alle 6 milepæler er funksjonelt implementert, testet (`npm test`), lintet
+(`npm run lint`) og bygget (`npm run build`) uten feil, og deployet til
+`https://terjebra.github.io/beaches/`.
 
-Gjenstår i `src/components/`:
-- `Hero.tsx` — temp, vind, kompass, tidschips, vindstriper (§7)
-- `Compass.tsx`
-- `BestBeach.tsx` — anbefalingskortet
-- `BeachList.tsx` / `BeachCard.tsx`
+**Ikke gjort** (krever en faktisk nettleser, som ikke er brukt i denne sesjonen):
+- Visuell verifisering ved 390px og 320px bredde
+- Lighthouse mobil-score (Performance/Accessibility ≥ 90)
+- Manuell test av WindOverride-sliderne, tastaturfokus og kart-interaksjon i nettleser
 
-`App.tsx` er fortsatt en minimal placeholder (`<h1>Strandvind · Mandal</h1>`) og må
-kobles opp mot `useForecast()`, `score.ts` og de nye komponentene.
-
-Ikke påbegynt: Milepæl 5 (kart) og 6 (finpuss).
+Statisk CSS-gjennomgang tyder på at layouten tåler 320px (flex-wrap på chips,
+ingen fikserte bredder som ville forårsake horisontal scroll), men dette er ikke
+bekreftet i en ekte nettleser.
 
 ## Praktisk for å fortsette
 
@@ -69,4 +91,6 @@ npm run dev
 Verifiseringsrutine brukt gjennom prosjektet: etter hver endring, kjør
 `npm run lint && npm test && npm run build`, commit, push til `main`, og vent på
 at GitHub Actions-workflowen fullfører (`gh`-CLI er ikke installert i dette
-miljøet, så status er sjekket via `curl` mot GitHub sitt REST API for Actions-runs).
+miljøet, så status er sjekket via `curl` mot GitHub sitt REST API for Actions-runs,
+som har en lav rate-limit uautentisert — bruk `curl https://terjebra.github.io/beaches/`
+for å sjekke om siste build faktisk er live, det går ikke mot samme rate-limit).

@@ -53,10 +53,11 @@ fullføres eller når noe avviker fra planen, slik at arbeidet kan fortsette i e
   (`gust?: number`) i `ForecastPoint`/`MetInstantDetails` i stedet for å bytte
   endepunkt. Prototypens rendering behandlet allerede gust som valgfritt
   (`w.gust ? ... : ""`), så dette er konsistent.
-- **Lambertstranda → Yr-lenke**: lenken i prototypen peker til en Yr-URL med
-  slug `Bankebukta`, ikke `Lambertstranda`. Bekreftet med bruker at dette er
-  samme strand under et annet navn på Yr – portert eksakt som i prototypen,
-  ingen endring nødvendig.
+- **Sponga → Yr-lenke**: stranda vises som «Sponga» i UI-et (`navn`), men
+  Yr-lenken peker til slug `Bankebukta` – bekreftet med bruker at Yr bruker
+  det navnet for samme strand. `id` er fortsatt `lambertstranda` internt
+  (kun brukt som nøkkel, vises ikke), navnet ble endret fra «Lambertstranda»
+  til «Sponga» på brukerens beskjed.
 - **Deploy-base-path**: Avklart med bruker at `base` skal være `/beaches/`
   (matcher repo-navnet), ikke en egen `/strender/`-subpath.
 - **react-leaflet-versjon**: Planen (§2) spesifiserer v4, men v4s peer-deps krever

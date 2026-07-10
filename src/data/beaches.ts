@@ -66,7 +66,7 @@ export const BEACHES: Beach[] = [
   },
   {
     id: 'torkelshola',
-    navn: 'Torkelshola',
+    navn: 'Torkelshåla',
     lat: 58.0183384,
     lon: 7.4284982,
     venderMot: 270,
@@ -74,7 +74,7 @@ export const BEACHES: Beach[] = [
   },
   {
     id: 'lambertstranda',
-    navn: 'Lambertstranda',
+    navn: 'Sponga',
     lat: 58.0219956,
     lon: 7.4323051,
     venderMot: 205,

@@ -1,4 +1,4 @@
-# Strandvind · Mandal
+# Hvilken strand i Mandal?
 
 Åpen webapp som viser hvilken badestrand i Mandal som har best forhold akkurat nå,
 basert på vindretning og vindstyrke fra [MET/Yr](https://api.met.no). Ingen pålogging,

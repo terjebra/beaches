@@ -1,4 +1,6 @@
-# Status — Strandvind Mandal
+# Status — Hvilken strand i Mandal?
+
+_(Prosjektnavn/repo: «beaches» / opprinnelig arbeidstittel «Strandvind Mandal» i PLAN.md — appen selv heter «Hvilken strand i Mandal?».)_
 
 Fremdrift mot milepælene i [PLAN.md](./PLAN.md). Oppdater denne filen når en milepæl
 fullføres eller når noe avviker fra planen, slik at arbeidet kan fortsette i en ny sesjon.
